@@ -1,35 +1,26 @@
 package app.googleplaces;
 
-
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
-public class MainActivity extends AppCompatActivity  {
-
-    Button bb;
+public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bb=(Button)findViewById(R.id.findPlace);
-        bb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                findPlace(v);
-            }
-        });
 
     }
 
@@ -37,25 +28,27 @@ public class MainActivity extends AppCompatActivity  {
         try {
             Intent intent =
                     new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .build(MainActivity.this);
-
-
-            startActivityForResult(intent, 1);
+                            .build(this);
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
         } catch (GooglePlayServicesRepairableException e) {
             // TODO: Handle the error.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
         } catch (GooglePlayServicesNotAvailableException e) {
             // TODO: Handle the error.
-        }
+            String message = "Google Play Services is not available: " +
+                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
+
+
+
+        }
     }
 
     // A place has been received; use requestCode to track the request.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 1) {
-            Toast.makeText(getApplicationContext(), "YOU LOST!!!", Toast.LENGTH_LONG).show();
-
+        if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.e("Tag", "Place: " + place.getAddress() + place.getPhoneNumber() + place.getLatLng().latitude);

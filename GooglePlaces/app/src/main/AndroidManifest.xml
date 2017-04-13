@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBJTe8leQ0INiJWmgNDk26UszRrOeClxL0" />
+            android:value="AIzaSyABCGmH7-efOPzX2WYBI0L8WS44a0g3Tkc" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GoogleMapActivity"></activity>
 
     </application>
 

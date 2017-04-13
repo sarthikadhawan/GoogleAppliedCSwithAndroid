@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     String title, address;
     double latitude,longitude;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +37,11 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void onMapReady(GoogleMap map){
-        LatLng sydney = new LatLng(latitude,longitude);
+        mMap = map;
 
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-        map.addMarker( new MarkerOptions()
-                .title(title)
-                .snippet(address)
-                .position(sydney));
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }

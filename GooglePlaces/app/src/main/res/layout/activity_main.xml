@@ -13,8 +13,8 @@
         android:id="@+id/findPlace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="findPlace"
-        android:text="Search Google Places" />
+        android:text="Search Google Places"
+        android:onClick="findPlace"/>
 
     <TextView
         android:layout_margin="20dp"
